@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
 <ruleset>
-    <rule ref="./vendor/mediact/coding-standard/src/MediaCT/phpmd.xml" />
+    <rule ref="./vendor/youwe/coding-standard/src/Global/phpmd.xml" />
 </ruleset>
