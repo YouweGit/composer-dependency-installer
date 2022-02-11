@@ -1,18 +1,21 @@
 <?php
+
 /**
- * Copyright MediaCT. All rights reserved.
- * https://www.mediact.nl
+ * Copyright Youwe. All rights reserved.
+ * https://www.youweagency.com
  */
 
-namespace Mediact\Composer\DependencyInstaller\Tests;
+declare(strict_types=1);
+
+namespace Youwe\Composer\DependencyInstaller\Tests;
 
 use Composer\Json\JsonFile;
-use Mediact\Composer\DependencyInstaller\DependencyInstaller;
+use Youwe\Composer\DependencyInstaller\DependencyInstaller;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @coversDefaultClass \Mediact\Composer\DependencyInstaller\DependencyInstaller
+ * @coversDefaultClass \Youwe\Composer\DependencyInstaller\DependencyInstaller
  */
 class DependencyInstallerTest extends TestCase
 {

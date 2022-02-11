@@ -1,12 +1,12 @@
 {
-    "name": "mediact/composer-dependency-installer",
+    "name": "youwe/composer-dependency-installer",
     "description": "Install Composer dependencies.",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "MediaCT",
-            "email": "contact@mediact.nl"
+            "name": "Youwe",
+            "email": "contact@youweagency.com"
         },
         {
             "name": "Klaas Sangers",
@@ -30,12 +30,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Mediact\\Composer\\DependencyInstaller\\": "src"
+            "Youwe\\Composer\\DependencyInstaller\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Mediact\\Composer\\DependencyInstaller\\Tests\\": "tests"
+            "Youwe\\Composer\\DependencyInstaller\\Tests\\": "tests"
         }
     }
 }

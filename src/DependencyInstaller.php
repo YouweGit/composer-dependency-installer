@@ -1,10 +1,13 @@
 <?php
+
 /**
- * Copyright MediaCT. All rights reserved.
- * https://www.mediact.nl
+ * Copyright Youwe. All rights reserved.
+ * https://www.youweagency.com
  */
 
-namespace Mediact\Composer\DependencyInstaller;
+declare(strict_types=1);
+
+namespace Youwe\Composer\DependencyInstaller;
 
 use Composer\Command\ConfigCommand;
 use Composer\Command\RequireCommand;
