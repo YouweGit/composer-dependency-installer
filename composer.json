@@ -25,8 +25,7 @@
     },
     "require-dev": {
         "kint-php/kint": "@stable",
-        "phpunit/phpunit": "@stable",
-        "youwe/testing-suite": "dev-master"
+        "phpunit/phpunit": "@stable"
     },
     "repositories": [
         {
