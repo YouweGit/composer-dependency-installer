@@ -6,7 +6,7 @@
     "authors": [
         {
             "name": "Youwe",
-            "email": "contact@youweagency.com"
+            "email": "info@youweagency.com"
         },
         {
             "name": "Klaas Sangers",
@@ -17,17 +17,43 @@
             "role": "developer"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.0",
-        "composer/composer": "^1.0 || ^2.0"
+        "composer/composer": "^1.0 || ^2.0",
+        "php": "^7.0"
     },
     "require-dev": {
+        "kint-php/kint": "@stable",
         "phpunit/phpunit": "@stable",
-        "mediact/testing-suite": "@stable",
-        "kint-php/kint": "@stable"
+        "youwe/testing-suite": "dev-master"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/YouweGit/coding-standard"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/YouweGit/testing-suite"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/YouweGit/coding-standard-phpstorm"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/YouweGit/composer-dependency-installer"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/YouweGit/composer-file-installer"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/YouweGit/file-mapping"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Youwe\\Composer\\DependencyInstaller\\": "src"
@@ -37,5 +63,8 @@
         "psr-4": {
             "Youwe\\Composer\\DependencyInstaller\\Tests\\": "tests"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
