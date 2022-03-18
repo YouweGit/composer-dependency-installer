@@ -17,7 +17,7 @@
             "role": "developer"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
         "composer/composer": "^1.0 || ^2.0",
@@ -27,32 +27,6 @@
         "kint-php/kint": "@stable",
         "phpunit/phpunit": "@stable"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/YouweGit/coding-standard"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/YouweGit/testing-suite"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/YouweGit/coding-standard-phpstorm"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/YouweGit/composer-dependency-installer"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/YouweGit/composer-file-installer"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/YouweGit/file-mapping"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Youwe\\Composer\\DependencyInstaller\\": "src"
