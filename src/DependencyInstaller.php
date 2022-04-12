@@ -109,6 +109,7 @@ class DependencyInstaller
 
         if (array_key_exists($node, $this->definition)
             && array_key_exists($name, $this->definition[$node])
+            && $this->definition[$node][$name] === $version
         ) {
             return;
         }
