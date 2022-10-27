@@ -97,13 +97,14 @@ class DependencyInstaller
      *
      * @param string $name
      * @param string $version
-     * @param bool   $dev
+     * @param bool $dev
+     * @param bool $updateDependencies
      *
      * @return void
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    public function installPackage(string $name, string $version, bool $dev = true)
+    public function installPackage(string $name, string $version, bool $dev = true, bool $updateDependencies = false)
     {
         $node = $dev ? 'require-dev' : 'require';
 
@@ -126,6 +127,7 @@ class DependencyInstaller
                 'command' => 'require',
                 'packages' => [$name . ':' . $version],
                 '--dev' => $dev,
+                '-W' => $updateDependencies,
                 '--no-scripts' => true,
                 '--no-interaction' => true,
                 '--no-plugins' => true,

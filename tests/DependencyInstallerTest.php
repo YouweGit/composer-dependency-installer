@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Youwe\Composer\DependencyInstaller\Tests;
 
 use Composer\Json\JsonFile;
+use Seld\JsonLint\ParsingException;
 use Youwe\Composer\DependencyInstaller\DependencyInstaller;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -131,21 +132,24 @@ class DependencyInstallerTest extends TestCase
      * @depends      testConstructor
      * @dataProvider packageProvider
      *
-     * @param string              $name
-     * @param string              $version
-     * @param bool                $dev
+     * @param string $name
+     * @param string $version
+     * @param bool $dev
+     * @param bool $updateDependencies
      * @param DependencyInstaller $dependencyInstaller
      *
      * @return void
+     * @throws ParsingException
      * @covers ::installPackage
      */
     public function testInstallPackage(
         string $name,
         string $version,
         bool $dev,
+        bool $updateDependencies,
         DependencyInstaller $dependencyInstaller
     ) {
-        $dependencyInstaller->installPackage($name, $version, $dev);
+        $dependencyInstaller->installPackage($name, $version, $dev, $updateDependencies);
 
         $jsonFile   = new JsonFile('composer.json');
         $definition = $jsonFile->read();
@@ -163,8 +167,8 @@ class DependencyInstallerTest extends TestCase
     public function packageProvider(): array
     {
         return [
-            ['psr/log', '@stable', true],
-            ['psr/log', '@stable', false]
+            ['psr/log', '@stable', true, false],
+            ['psr/log', '@stable', false, false]
         ];
     }
 }
