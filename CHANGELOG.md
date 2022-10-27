@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Option to update module with all dependencies.
 
+## 1.3.1
+### Changed
+- Package is now also installable in PHP 8.
+
 ## 1.3.0
 ### Added
 - Check on version if versions do not match require package again.
