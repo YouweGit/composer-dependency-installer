@@ -9,36 +9,44 @@ declare(strict_types=1);
 
 namespace Youwe\Composer\DependencyInstaller\Tests;
 
+use AllowDynamicProperties;
 use Composer\Json\JsonFile;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\MockObject\Exception;
 use Seld\JsonLint\ParsingException;
 use Youwe\Composer\DependencyInstaller\DependencyInstaller;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @coversDefaultClass \Youwe\Composer\DependencyInstaller\DependencyInstaller
- */
+#[CoversClass(DependencyInstaller::class)]
+#[CoversMethod(DependencyInstaller::class, '__construct')]
+#[CoversMethod(DependencyInstaller::class, 'installPackage')]
+#[CoversMethod(DependencyInstaller::class, 'installRepository')]
+#[AllowDynamicProperties]
 class DependencyInstallerTest extends TestCase
 {
     /** @var string */
-    private static $directory = __DIR__ . DIRECTORY_SEPARATOR . 'tmp';
+    private static string $directory = __DIR__ . DIRECTORY_SEPARATOR . 'tmp';
 
     /**
-     * @return void
+     * @throws Exception
      */
-    public static function setUpBeforeClass()
+    protected function setUp(): void
     {
-        static::tearDownAfterClass();
-
         mkdir(static::$directory);
         chdir(static::$directory);
         file_put_contents('composer.json', '{}');
+
+        $this->dependencyInstaller = new DependencyInstaller(
+            'composer.json',
+            $this->createMock(OutputInterface::class)
+        );
     }
 
-    /**
-     * @return void
-     */
-    public static function tearDownAfterClass()
+    protected function tearDown(): void
     {
         if (is_dir(static::$directory)) {
             static::rrmdir(static::$directory);
@@ -69,43 +77,32 @@ class DependencyInstallerTest extends TestCase
 
 
     /**
-     * @return DependencyInstaller
-     * @covers ::__construct
+     * @return void
      */
-    public function testConstructor(): DependencyInstaller
+    public function testConstructor(): void
     {
-        $installer = new DependencyInstaller(
-            'composer.json',
-            $this->createMock(OutputInterface::class)
-        );
-
         $this->assertInstanceOf(
             DependencyInstaller::class,
-            $installer
+            $this->dependencyInstaller
         );
-
-        return $installer;
     }
 
     /**
-     * @depends      testConstructor
-     * @dataProvider repositoryProvider
-     *
-     * @param string              $name
-     * @param string              $type
-     * @param string              $url
-     * @param DependencyInstaller $dependencyInstaller
+     * @param string $name
+     * @param string $type
+     * @param string $url
      *
      * @return void
-     * @covers ::installRepository
+     * @throws ParsingException
      */
+    #[Depends('testConstructor')]
+    #[DataProvider('repositoryProvider')]
     public function testInstallRepository(
         string $name,
         string $type,
         string $url,
-        DependencyInstaller $dependencyInstaller
     ) {
-        $dependencyInstaller->installRepository($name, $type, $url);
+        $this->dependencyInstaller->installRepository($name, $type, $url);
 
         $jsonFile   = new JsonFile('composer.json');
         $definition = $jsonFile->read();
@@ -121,7 +118,7 @@ class DependencyInstallerTest extends TestCase
     /**
      * @return array
      */
-    public function repositoryProvider(): array
+    public static function repositoryProvider(): array
     {
         return [
             ['mediact', 'composer', 'https://composer.mediact.nl']
@@ -129,27 +126,26 @@ class DependencyInstallerTest extends TestCase
     }
 
     /**
-     * @depends      testConstructor
-     * @dataProvider packageProvider
-     *
      * @param string $name
      * @param string $version
      * @param bool $dev
      * @param bool $updateDependencies
-     * @param DependencyInstaller $dependencyInstaller
+     * @param bool $allowOverrideVersion
      *
      * @return void
      * @throws ParsingException
-     * @covers ::installPackage
      */
+    #[DataProvider('packageProvider')]
+    #[Depends('testConstructor')]
+    #[Depends('testInstallRepository')]
     public function testInstallPackage(
         string $name,
         string $version,
         bool $dev,
         bool $updateDependencies,
-        DependencyInstaller $dependencyInstaller
+        bool $allowOverrideVersion
     ) {
-        $dependencyInstaller->installPackage($name, $version, $dev, $updateDependencies);
+        $this->dependencyInstaller->installPackage($name, $version, $dev, $updateDependencies, $allowOverrideVersion);
 
         $jsonFile   = new JsonFile('composer.json');
         $definition = $jsonFile->read();
@@ -164,11 +160,11 @@ class DependencyInstallerTest extends TestCase
     /**
      * @return array
      */
-    public function packageProvider(): array
+    public static function packageProvider(): array
     {
         return [
-            ['psr/log', '@stable', true, false],
-            ['psr/log', '@stable', false, false]
+            ['psr/log', '@stable', true, false, true],
+            ['psr/log', '@stable', false, false, false]
         ];
     }
 }
