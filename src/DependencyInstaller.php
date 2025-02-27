@@ -99,18 +99,24 @@ class DependencyInstaller
      * @param string $version
      * @param bool $dev
      * @param bool $updateDependencies
+     * @param bool $allowOverrideVersion
      *
      * @return void
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    public function installPackage(string $name, string $version, bool $dev = true, bool $updateDependencies = false)
-    {
+    public function installPackage(
+        string $name,
+        string $version,
+        bool $dev = true,
+        bool $updateDependencies = false,
+        bool $allowOverrideVersion = true
+    ) {
         $node = $dev ? 'require-dev' : 'require';
 
         if (array_key_exists($node, $this->definition)
             && array_key_exists($name, $this->definition[$node])
-            && $this->definition[$node][$name] === $version
+            && ($this->definition[$node][$name] === $version || !$allowOverrideVersion)
         ) {
             return;
         }
