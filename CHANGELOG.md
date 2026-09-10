@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 2.1.0
+### Changed
+- Removed Composer 1 (end of life) support, now only Composer 2 is supported.
+- Changed direct dependency on composer/composer to a "composer-plugin-api" dependency to avoid nested dependency issues.
+
 ## 2.0.0
 ### Changed
 - DependencyInstaller constructor types are now nullable to resolve php 8.4 deprecation notice
